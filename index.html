@@ -270,15 +270,6 @@ window.HGJ_CONFIG = {"theme": {"colors": {"yellow": "#FFC700", "blue": "#1764F0"
   var recolor = function (zs) { zs.forEach(function (z) { if (ZONE_COLOR[z.n]) z.color = ZONE_COLOR[z.n]; }); };
   recolor(c.content.zones);
   c.content.members = [{ nick: "김한강", pin: "1234", genre: "브레이킹", first: 2023, no: "0000", photo: "", vols: [1, 2, 3, 4, 5, 6, 7], videos: [] }];
-  c.content.programs.forEach(function (p) {
-    if (p.title === "이벤트 배틀") p.desc = "2:2 랜덤 매칭 8강 토너먼트. 8강·4강은 2라운드, 결승은 4라운드(라운드당 45초)로 겨뤄요.";
-    if (p.title === "위스트릿 무대") { p.title = "WE STREET 공연"; p.desc = "14:30부터 WE STREET 3팀의 공연을 볼 수 있어요."; }
-    if (p.title === "장르 체험") p.desc = p.desc.replace("브레이킹·왁킹", "브레이킹·크럼프");
-  });
-  c.content.lineup.forEach(function (p) {
-    if (p.name === "왁킹 강사") { p.name = "크럼프 강사"; p.av = "K"; }
-    if (p.name === "위스트릿 공연팀") { p.name = "WE STREET 공연팀"; p.tag = ""; p.role = "14:30 공연 · 3팀"; }
-  });
   /* 이 브라우저에 예전 시간표가 저장돼 있으면 그 부분만 새 내용으로 바꿈 (다른 편집은 유지) */
   try {
     var KEY = "hgj-app-config-v1", s = JSON.parse(localStorage.getItem(KEY) || "null");
@@ -537,6 +528,8 @@ window.HGJ_CONFIG = {"theme": {"colors": {"yellow": "#FFC700", "blue": "#1764F0"
   });
   document.addEventListener("hgj:render", render);
   render();
+  /* 탭을 바꿀 때 기존 라인업이 다시 그려지면 바로 새 카드로 되돌림 */
+  new MutationObserver(function () { var b = $("#s-line"); if (b && !b.querySelector(".lu-group")) render(); }).observe($("#s-line"), { childList: true });
   if (window.claude && claude.use) {
     claude.use("db").then(function (d) {
       if (!d) return; db = d;
@@ -592,6 +585,7 @@ window.HGJ_CONFIG = {"theme": {"colors": {"yellow": "#FFC700", "blue": "#1764F0"
   });
   document.addEventListener("hgj:render", render);
   render();
+  new MutationObserver(function () { var x = $("#s-prog"); if (x && !x.querySelector(".pg-grid")) render(); }).observe($("#s-prog"), { childList: true });
   if (window.claude && claude.use) {
     claude.use("db").then(function (d) {
       if (!d) return; db = d;
