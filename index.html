@@ -74,6 +74,8 @@ a.pl-hit:active{opacity:.8}
 .pl-title{display:block;font-size:15.5px;font-weight:800;line-height:1.3}
 .pl-desc{font-size:13px;color:var(--muted);margin:4px 0 0;line-height:1.55;word-break:keep-all}
 .pl-card .pg-edit{padding:0 16px 14px}
+.lu-note{font-size:13px;font-weight:600;color:var(--ink);margin:-2px 0 10px;word-break:keep-all}
+.lu-note-edit{margin:0 0 10px}
 .lu-group{margin-bottom:18px}
 .lu-h{font-size:13px;font-weight:800;letter-spacing:.04em;color:var(--muted);margin:0 0 8px}
 .lu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -524,12 +526,12 @@ window.HGJ_CONFIG = {"theme": {"colors": {"yellow": "#FFC700", "blue": "#1764F0"
   var GROUPS = [
     ["HOST · MC", [["yukyung", "유경", "HOST · MC"], ["hyukjun", "혁준", "HOST · MC"]]],
     ["DJ", [["dames", "DAMES", "DJ"]]],
-    ["WE STREET 공연", [["ws1", "공연팀 1", "14:30 공연"], ["ws2", "공연팀 2", "14:30 공연"], ["ws3", "공연팀 3", "14:30 공연"]]],
-    ["GUEST", [["kyungwon", "경원총각", "GUEST"], ["ssooni", "씨순이", "GUEST"], ["jin", "JIN", "GUEST"], ["hiron", "하이론", "BATTLE GUEST"]]],
-    ["장르 체험 강사", [["nohyunho", "노현호", "브레이킹 강사"], ["vlue", "황규영 / VLUE", "크럼프 강사"]]],
-    ["촬영", [["poetryfilm", "POETRY FILM", "영상 촬영"], ["yoon", "YooN", "사진 촬영"], ["parkjegwan", "박제관", "사진 촬영"], ["choiyusin", "최유신", "영상 촬영"]]]
+    ["장르 체험 강사", [["nohyunho", "노현호", "브레이킹 강사"], ["vlue", "황규영 / VLUE", "크럼프 강사"]], "lesson"],
+    ["GUEST", [["kyungwon", "경원총각", "GUEST"], ["ssooni", "씨순이", "GUEST"], ["jin", "JIN", "GUEST"], ["hiron", "하이론", "BATTLE GUEST"]], "guest"],
+    ["촬영", [["poetryfilm", "POETRY FILM", "영상 촬영"], ["choiyusin", "최유신", "영상 촬영"], ["yoon", "YooN", "사진 촬영"], ["parkjegwan", "박제관", "사진 촬영"]]]
   ];
-  var META = {"dames": {"insta": "damesgood", "photo": "0f252f39d522840e4245a8d7c6b368a8"}, "hiron": {"insta": "_hi_ron", "name": "하이론", "photo": "dc8b1b9727d7dedb6ab924ee44b545ce", "role": "BATTLE GUEST"}, "hyukjun": {"insta": "blackee_yuri", "name": "혁준", "photo": "119daf05c5dc17119b529bd97842c072", "role": "HOST · MC"}, "jin": {"photo": "1095da3a463900d2f5d0fdb3fa90febd"}, "kyungwon": {"insta": "pppp__arrk", "name": "경원총각", "photo": "66544b1c444ea11d1302db201b32d0ee", "role": "GUEST"}, "nohyunho": {"insta": "kaka_dowool_01"}, "poetryfilm": {"insta": "poetry_film_club", "photo": "71647f270cfecab7878db19aaab1e38e"}, "ssooni": {"insta": "cu_soonii", "name": "씨순이", "photo": "70dd9812a63e6656867ee7d1ef6fe9c9", "role": "GUEST"}, "yoon": {"insta": "choi.ayyeka"}, "yukyung": {"insta": "kwon_yk", "name": "유경", "photo": "043b16bfccba82de1d4ebb593e130735", "role": "HOST · MC"}}, db = null, assets = null, editable = false;
+  var NOTES = { lesson: "한강플플 실내 공간에서 스트릿댄스를 배울 수 있는 기회!", guest: "" };
+  var META = {"choiyusin": {"insta": "c.hoiiys", "name": "최유신", "photo": "83e08cf94d721339a6c755bc3fa54b21", "role": "영상 촬영"}, "dames": {"insta": "damesgood", "photo": "0f252f39d522840e4245a8d7c6b368a8"}, "hiron": {"insta": "_hi_ron", "name": "하이론", "photo": "dc8b1b9727d7dedb6ab924ee44b545ce", "role": "BATTLE GUEST"}, "hyukjun": {"insta": "blackee_yuri", "name": "혁준", "photo": "65a084495cfeb1782e6d76ad30030351", "role": "WE STREET"}, "jin": {"insta": "wassup_jin", "name": "JIN", "photo": "1095da3a463900d2f5d0fdb3fa90febd", "role": "GUEST"}, "kyungwon": {"insta": "pppp__arrk", "name": "경원총각", "photo": "66544b1c444ea11d1302db201b32d0ee", "role": "GUEST"}, "nohyunho": {"insta": "kaka_dowool_01", "photo": "e569ad7b5324a61c1e6a05363b91a7dc"}, "note-guest": {"text": "급식실 청년부터 편의점 알바생까지! 다양한 직업군을 가진 특별 게스트!"}, "parkjegwan": {"insta": "_cloudframe", "name": "박제관", "photo": "e676d408cfd68fc90b7f4bbc5ae164ed", "role": "사진 촬영"}, "poetryfilm": {"insta": "poetry_film_club", "photo": "71647f270cfecab7878db19aaab1e38e"}, "ssooni": {"insta": "cu_soonii", "name": "씨순이", "photo": "70dd9812a63e6656867ee7d1ef6fe9c9", "role": "GUEST"}, "vlue": {"insta": "vlue_vibe", "name": "황규영 / VLUE", "photo": "c1ffd9bdad64f815df7bed3f50e2c1d6", "role": "크럼프 강사"}, "yoon": {"insta": "choi.ayyeka", "photo": "2f2cfec8923a7bcdb7bfbb3175187787"}, "yukyung": {"insta": "kwon_yk", "name": "유경", "photo": "043b16bfccba82de1d4ebb593e130735", "role": "ONLIT (한강잼)"}}, db = null, assets = null, editable = false;
   var $ = function (s) { return document.querySelector(s); };
   var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var handle = function (v) { return String(v || "").trim().replace(/^@/, "").replace(/^https?:\/\/(www\.)?instagram\.com\//, "").replace(/\/.*$/, ""); };
@@ -540,10 +542,12 @@ window.HGJ_CONFIG = {"theme": {"colors": {"yellow": "#FFC700", "blue": "#1764F0"
     var nk = function (s) { return String(s || "").replace(/[\s\/._-]/g, "").toLowerCase(); };
     var edImg = {};
     try { (window.HGJ ? window.HGJ.config : window.HGJ_CONFIG).content.lineup.forEach(function (p) { if (p && p.img) { edImg[nk(p.name)] = p.img; String(p.name).split("/").forEach(function (part) { if (nk(part)) edImg[nk(part)] = p.img; }); } }); } catch (e) {}
-    var pickImg = function (p) { var BAKED = {"dames": "images/lineup/dames.jpg", "hiron": "images/lineup/hiron.jpg", "hyukjun": "images/lineup/hyukjun.jpg", "jin": "images/lineup/jin.jpg", "kyungwon": "images/lineup/kyungwon.jpg", "poetryfilm": "images/lineup/poetryfilm.jpg", "ssooni": "images/lineup/ssooni.jpg", "yukyung": "images/lineup/yukyung.jpg"}; if (BAKED[p[0]]) return BAKED[p[0]]; var m = META[p[0]] || {}; if (m.photo) return "/_blob/" + m.photo; var hit = edImg[nk(p[1])]; if (hit) return hit; var parts = String(p[1]).split("/"); for (var i = 0; i < parts.length; i++) { if (edImg[nk(parts[i])]) return edImg[nk(parts[i])]; } return ""; };
+    var pickImg = function (p) { var BAKED = {"choiyusin": "images/lineup/choiyusin.jpg", "dames": "images/lineup/dames.jpg", "hiron": "images/lineup/hiron.jpg", "hyukjun": "images/lineup/hyukjun.jpg", "jin": "images/lineup/jin.jpg", "kyungwon": "images/lineup/kyungwon.jpg", "nohyunho": "images/lineup/nohyunho.jpg", "parkjegwan": "images/lineup/parkjegwan.jpg", "poetryfilm": "images/lineup/poetryfilm.jpg", "ssooni": "images/lineup/ssooni.jpg", "vlue": "images/lineup/vlue.jpg", "yoon": "images/lineup/yoon.jpg", "yukyung": "images/lineup/yukyung.jpg"}; if (BAKED[p[0]]) return BAKED[p[0]]; var m = META[p[0]] || {}; if (m.photo) return "/_blob/" + m.photo; var hit = edImg[nk(p[1])]; if (hit) return hit; var parts = String(p[1]).split("/"); for (var i = 0; i < parts.length; i++) { if (edImg[nk(parts[i])]) return edImg[nk(parts[i])]; } return ""; };
     box.innerHTML = GROUPS.map(function (g) {
       var n = g[1].length, cls = n === 1 ? "n1" : (n === 3 ? "n3" : "");
-      return '<div class="lu-group"><h3 class="lu-h">' + esc(g[0]) + '</h3><div class="lu-grid ' + cls + '">' + g[1].map(function (p, idx) {
+      var nk = g[2], note = nk ? ((META["note-" + nk] || {}).text || NOTES[nk] || "") : "";
+      var noteHtml = nk ? ((note ? '<p class="lu-note">' + esc(note) + "</p>" : "") + (editable ? '<div class="lu-igrow lu-note-edit"><input class="lu-in lu-note-in" value="' + esc(note) + '" placeholder="분류 설명 문구"><button class="lu-btn lu-note-save" data-note="' + nk + '">저장</button></div>' : "")) : "";
+      return '<div class="lu-group"><h3 class="lu-h">' + esc(g[0]) + "</h3>" + noteHtml + '<div class="lu-grid ' + cls + '">' + g[1].map(function (p, idx) {
         var m = META[p[0]] || {}, ig = handle(m.insta), name = m.name || p[1], role = m.role || p[2];
         var wide = n === 1 || (n % 2 === 1 && n !== 3 && idx === n - 1);
         var src = pickImg(p);
@@ -570,6 +574,11 @@ window.HGJ_CONFIG = {"theme": {"colors": {"yellow": "#FFC700", "blue": "#1764F0"
     assets.upload(f).then(function (a) { return save(k, { photo: a.id }, msg); }, function () { msg.textContent = "사진을 올리지 못했어요. 20MB 이하 이미지인지 확인해 주세요."; });
   });
   document.addEventListener("click", function (e) {
+    var nb = e.target.closest && e.target.closest(".lu-note-save"); if (!nb) return;
+    var v = nb.parentNode.querySelector(".lu-note-in").value.trim();
+    save("note-" + nb.dataset.note, { text: v });
+  });
+  document.addEventListener("click", function (e) {
     var b = e.target.closest && e.target.closest(".lu-save"); if (!b) return;
     var card = b.closest(".lu-card"); save(card.dataset.k, { insta: handle(card.querySelector(".lu-ig-in").value), name: card.querySelector(".lu-nm").value.trim(), role: card.querySelector(".lu-rl").value.trim() }, card.querySelector(".lu-msg"));
   });
@@ -593,7 +602,7 @@ window.HGJ_CONFIG = {"theme": {"colors": {"yellow": "#FFC700", "blue": "#1764F0"
 <script>
 /* 즐길거리 프로그램: 사진 카드 + 누르면 링크 열기 · 사진·링크는 편집 권한이 있는 사람이 화면에서 바로 올리고 고침 */
 (function () {
-  var META = {"p0": {"photo": "e20d92dab1fa7ad6fba4caa6b761ec26"}, "p1": {"link": "https://www.youtube.com/watch?v=S54KfEcL0xg", "photo": "1bfdf4fc308f4a15434370b0da112003"}, "p2": {"link": "https://www.youtube.com/@westreetonstage5019", "photo": "f3bdecfd77a9fd5f2d63ae2a0d86aee8"}, "p3": {"photo": "77e9a1f1b2c06fc80e291d396021c830"}}, db = null, assets = null, editable = false;
+  var META = {"p0": {"photo": "e20d92dab1fa7ad6fba4caa6b761ec26"}, "p1": {"link": "https://www.youtube.com/watch?v=S54KfEcL0xg", "photo": "1bfdf4fc308f4a15434370b0da112003"}, "p2": {"link": "https://www.youtube.com/@westreetonstage5019", "photo": "df78b3194d849312a3acbac88948e656"}, "p3": {"photo": "77e9a1f1b2c06fc80e291d396021c830"}, "p4": {"link": "https://www.instagram.com/p/DfPBoPmGAzi/?dlrf=MXZ3d2Rpd2JwMmI3Mg==", "photo": "61c0a63b75b150dc1357728542d25c25"}, "p5": {"photo": "aae05107b112df0e2c102dbe8da1d86c"}}, db = null, assets = null, editable = false;
   var $ = function (s) { return document.querySelector(s); };
   var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var br = function (s) { return esc(s).replace(/\n/g, "<br>"); };
@@ -619,7 +628,7 @@ window.HGJ_CONFIG = {"theme": {"colors": {"yellow": "#FFC700", "blue": "#1764F0"
   var ORDER = [["야외 프로그램", ["jam", "battle", "show", "photo"]], ["실내 프로그램", ["lesson", "market"]]];
   function row(p, k) {
     var m = META[k] || {}, link = okLink(m.link || p.link), ic = ICONS[iconKey(p)];
-    var PBAKED = {"p0": "images/programs/p0.jpg", "p1": "images/programs/p1.jpg", "p2": "images/programs/p2.jpg", "p3": "images/programs/p3.jpg"}; var src = PBAKED[k] || (m.photo ? "/_blob/" + m.photo : (p.img || ""));
+    var PBAKED = {"p0": "images/programs/p0.jpg", "p1": "images/programs/p1.jpg", "p2": "images/programs/p2.jpg", "p3": "images/programs/p3.jpg", "p4": "images/programs/p4.jpg", "p5": "images/programs/p5.jpg"}; var src = PBAKED[k] || (m.photo ? "/_blob/" + m.photo : (p.img || ""));
     var icon = '<div class="pl-ico pl-' + ic[0] + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ic[1] + "</svg></div>";
     var head = '<div class="pg-img' + (src ? "" : " empty") + '">' + (src ? '<img src="' + esc(src) + '" alt="">' : icon) + (p.where ? '<span class="pg-where">' + esc(p.where) + "</span>" : "") + "</div>";
     var inner = head + '<div class="pg-body"><b class="pg-title">' + esc(p.title) + '</b><p class="pg-desc">' + br(p.desc) + "</p>" + (link ? '<span class="pg-more">자세히 보기 ↗</span>' : "") + "</div>";
